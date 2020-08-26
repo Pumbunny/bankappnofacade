@@ -5,6 +5,7 @@
  */
 package bankfacade;
 
+import FacadeServer.BankFacadeServer;
 import bankcustomers.BankAccount;
 import bankcustomers.BankCustomer;
 import gencustaccount.AccountIf;
@@ -29,19 +30,22 @@ public class BankFacade {
        acc.deposit(1000);
        cust1Accounts.add(acc);
        CustomerIf cust1 = new BankCustomer("John", cust1Accounts);
-       System.out.println("Customer and account information");
-       System.out.println("Name = " + cust1.getCustomerName());
-       System.out.println("Has " + cust1.getNumAccounts() + " accounts");
-       acc = cust1.getAccount(12345);
-       System.out.println("Account Number: " + acc.getAccountNumber() + " has " + acc.getBalance());
-       acc = cust1.getAccount(12346);
-       System.out.println("Account Number: " + acc.getAccountNumber() + " has " + acc.getBalance());
-       acc.deposit(1000);
-       System.out.println("Account Number: " + acc.getAccountNumber() + " has " + acc.getBalance());
-       ArrayList<AccountIf> accounts = cust1.getllAccounts();
-       for(AccountIf account : accounts) {
-           System.out.println("Account number " + account.getAccountNumber() + " has " + account.getBalance());
-       }
+       
+       ArrayList<AccountIf> cust2Accounts = new ArrayList();
+       AccountIf acc2 = new BankAccount(22345);
+       acc2.deposit(700);
+       cust2Accounts.add(acc2);
+       acc2 = new BankAccount(22346);
+       acc2.deposit(6000);
+       cust2Accounts.add(acc2);
+       CustomerIf cust2 = new BankCustomer("Rose", cust2Accounts);
+       
+       
+       BankFacadeServer obj = BankFacadeServer.getMyFacadeObject();
+        
+       obj.getBankAccount(cust1 ,12345);
+       obj.doDeposit(3000, cust2, 12345);
+       obj.getBankCustomer("John", cust1Accounts);
     }
     
 }
